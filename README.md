@@ -1,4 +1,4 @@
-# discord-welcomecard
+# @quitscope/discord-welcomecard
 
 Render Discord welcome cards as static **PNG** or animated **GIF** from one builder.
 
@@ -13,14 +13,14 @@ Render Discord welcome cards as static **PNG** or animated **GIF** from one buil
 ## Install
 
 ```bash
-npm install discord-welcomecard
+npm install @quitscope/discord-welcomecard
 ```
 
 ## Usage
 
 ```ts
-import { WelcomeCard } from 'discord-welcomecard';
-import { toAttachment } from 'discord-welcomecard/discord';
+import { WelcomeCard } from '@quitscope/discord-welcomecard';
+import { toAttachment } from '@quitscope/discord-welcomecard/discord';
 
 const card = new WelcomeCard()
   .setPreset('centered')
@@ -88,7 +88,7 @@ client.on('guildMemberAdd', async (member) => {
 | `toPNG()` | `Promise<Buffer>` — static card |
 | `toGIF()` | `Promise<Buffer>` — animated card |
 
-The `toAttachment(buffer, name?)` helper lives in `discord-welcomecard/discord` and requires
+The `toAttachment(buffer, name?)` helper lives in `@quitscope/discord-welcomecard/discord` and requires
 `discord.js` (optional peer dependency). The core package works without it.
 
 Only `setUsername()` is required — everything else has sensible defaults or fallbacks.
