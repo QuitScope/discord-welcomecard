@@ -1,4 +1,4 @@
-import { centeredLayout } from './centered.js';
+import { centeredLayout, resolvePosition } from './centered.js';
 import type { CardOptions } from '../types.js';
 import type { LayoutResult } from './centered.js';
 
@@ -15,6 +15,12 @@ export function heroLayout(opts: CardOptions): LayoutResult {
     subtitle: base.subtitle
       ? { ...base.subtitle, x: textX, y: base.height / 2 + 30, align: 'left' }
       : undefined,
-    memberCount: base.memberCount,
+    memberCount: base.memberCount
+      ? // hero is asymmetric — default the count to the corner, not bottom-center
+        {
+          ...base.memberCount,
+          ...resolvePosition(opts.memberCountPosition ?? 'bottom-right', base.width, base.height),
+        }
+      : undefined,
   };
 }

@@ -36,8 +36,20 @@ describe('member count position', () => {
     expect(l.memberCount).toBeUndefined();
   });
 
-  it('defaults to the bottom-right corner', () => {
+  it('defaults to bottom-center in the centered preset', () => {
     const l = make();
+    expect(l.memberCount?.align).toBe('center');
+    expect(l.memberCount?.x).toBe(l.width / 2);
+    expect(l.memberCount?.y).toBe(l.height - 24);
+  });
+
+  it('defaults to the bottom-right corner in the hero preset', () => {
+    const l = layout({
+      ...DEFAULT_OPTIONS,
+      preset: 'hero',
+      username: 'Quit',
+      memberCount: 1234,
+    });
     expect(l.memberCount?.align).toBe('right');
     expect(l.memberCount?.x).toBe(l.width - 24);
     expect(l.memberCount?.y).toBe(l.height - 24);

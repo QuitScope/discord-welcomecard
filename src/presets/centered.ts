@@ -95,7 +95,8 @@ export function centeredLayout(opts: CardOptions): LayoutResult {
       opts.memberCount !== undefined
         ? {
             text: `MEMBER #${opts.memberCount}`,
-            ...resolvePosition(opts.memberCountPosition, width, height),
+            // centered preset: everything centered by default, count included
+            ...resolvePosition(opts.memberCountPosition ?? 'bottom-center', width, height),
             size: 16,
             color: textColor,
             family,
