@@ -1,0 +1,45 @@
+{
+  "name": "@quit/welcomecard",
+  "version": "0.1.0",
+  "description": "Render Discord welcome cards as static PNG or animated GIF from one builder.",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./discord": {
+      "types": "./dist/discord.d.ts",
+      "import": "./dist/discord.js",
+      "require": "./dist/discord.cjs"
+    }
+  },
+  "files": ["dist", "src/assets/fonts"],
+  "engines": { "node": ">=18" },
+  "scripts": {
+    "build": "tsup",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "examples": "node scripts/render-examples.mjs"
+  },
+  "dependencies": {
+    "@napi-rs/canvas": "^0.1.65",
+    "gifenc": "^1.0.3"
+  },
+  "peerDependencies": {
+    "discord.js": "^14.0.0"
+  },
+  "peerDependenciesMeta": {
+    "discord.js": { "optional": true }
+  },
+  "devDependencies": {
+    "discord.js": "^14.16.0",
+    "tsup": "^8.3.0",
+    "typescript": "^5.6.0",
+    "vitest": "^2.1.0"
+  }
+}
