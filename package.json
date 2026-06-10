@@ -1,5 +1,5 @@
 {
-  "name": "@quit/welcomecard",
+  "name": "@quitscope/welcomecard",
   "version": "0.1.0",
   "description": "Render Discord welcome cards as static PNG or animated GIF from one builder.",
   "license": "MIT",
