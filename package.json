@@ -2,6 +2,23 @@
   "name": "@quit/welcomecard",
   "version": "0.1.0",
   "description": "Render Discord welcome cards as static PNG or animated GIF from one builder.",
+  "license": "MIT",
+  "author": "QuitScope",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/QuitScope/discord-welcomecard.git"
+  },
+  "homepage": "https://github.com/QuitScope/discord-welcomecard#readme",
+  "bugs": "https://github.com/QuitScope/discord-welcomecard/issues",
+  "keywords": [
+    "discord",
+    "discord.js",
+    "welcome-card",
+    "welcome",
+    "canvas",
+    "gif",
+    "image-generation"
+  ],
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
@@ -18,13 +35,14 @@
       "require": "./dist/discord.cjs"
     }
   },
-  "files": ["dist", "src/assets/fonts"],
+  "files": ["dist"],
   "engines": { "node": ">=18" },
   "scripts": {
     "build": "tsup",
     "test": "vitest run",
     "test:watch": "vitest",
-    "examples": "node scripts/render-examples.mjs"
+    "examples": "node scripts/render-examples.mjs",
+    "prepublishOnly": "npm test && npm run build"
   },
   "dependencies": {
     "@napi-rs/canvas": "^0.1.65",
