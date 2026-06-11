@@ -43,4 +43,10 @@ describe('loadImageOrFallback', () => {
     expect(img.width).toBe(64);
     expect(img.height).toBe(64);
   });
+
+  it('returns the same Image instance for the same fallback color and size', async () => {
+    const a = await loadImageOrFallback(undefined, '#aabbcc', 32, 32);
+    const b = await loadImageOrFallback(undefined, '#aabbcc', 32, 32);
+    expect(a).toBe(b); // reference equality — same cached instance
+  });
 });
