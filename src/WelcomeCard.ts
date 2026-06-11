@@ -13,7 +13,7 @@ import { renderPNG } from './render/toPNG.js';
 import { renderGIF } from './render/toGIF.js';
 
 export class WelcomeCard {
-  private opts: CardOptions = { ...DEFAULT_OPTIONS, font: {}, animations: [] };
+  private opts: CardOptions = { ...DEFAULT_OPTIONS };
 
   setPreset(preset: PresetName): this {
     if (!PRESETS[preset]) {

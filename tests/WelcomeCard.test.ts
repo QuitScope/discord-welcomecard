@@ -24,6 +24,15 @@ describe('WelcomeCard builder', () => {
     expect(buf.subarray(0, 6).equals(GIF_MAGIC)).toBe(true);
   });
 
+  it('renders a GIF with background animation without throwing', async () => {
+    const buf = await new WelcomeCard()
+      .setUsername('Quit')
+      .setAnimations(['background'])
+      .toGIF();
+    expect(buf.subarray(0, 6).equals(GIF_MAGIC)).toBe(true);
+    expect(buf.length).toBeGreaterThan(5000);
+  });
+
   it('throws WelcomeCardError when username is missing on toPNG', async () => {
     await expect(new WelcomeCard().toPNG()).rejects.toBeInstanceOf(WelcomeCardError);
   });

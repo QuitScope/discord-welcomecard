@@ -24,8 +24,18 @@ export async function renderGIF(opts: CardOptions): Promise<Buffer> {
   const enc = GIFEncoder();
 
   const frames = opts.animations.length === 0 ? 1 : GIF_FRAMES;
-  // one shared palette for all frames: stable colors (no flicker), faster encode
-  let palette: number[][] | undefined;
+
+  // For animated GIFs, build palette from progress=0.5: sheen peaks there so
+  // highlight colours absent from frame 0 are represented. For static (1 frame),
+  // skip the pre-render and derive the palette from the single rendered frame.
+  let palette: ReturnType<typeof quantize> | undefined;
+  if (frames > 1) {
+    const paletteState = frameStateFor(opts.animations, 0.5);
+    await drawFrame(ctx, l, paletteState);
+    outCtx.drawImage(canvas, 0, 0, gw, gh);
+    palette = quantize(outCtx.getImageData(0, 0, gw, gh).data, 256);
+  }
+
   for (let i = 0; i < frames; i++) {
     const progress = frames === 1 ? 0 : i / frames;
     const state = frameStateFor(opts.animations, progress);

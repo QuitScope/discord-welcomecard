@@ -1,7 +1,7 @@
 import type { CardOptions } from './types.js';
 
-export const CARD_WIDTH = 1024;
-export const CARD_HEIGHT = 384; // ~16:6 banner
+export const CARD_WIDTH = 840;
+export const CARD_HEIGHT = 420; // 2:1 banner
 
 export const GIF_FRAMES = 30;
 export const GIF_DELAY_MS = 50; // ~20fps

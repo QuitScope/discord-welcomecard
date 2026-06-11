@@ -4,6 +4,16 @@ import { DEFAULT_OPTIONS } from '../src/constants.js';
 import { PRESETS } from '../src/presets/index.js';
 
 describe('all presets', () => {
+  it('hero preset respects theme=light and uses a light background', () => {
+    const l = PRESETS['hero']({
+      ...DEFAULT_OPTIONS,
+      preset: 'hero',
+      theme: 'light',
+      username: 'Quit',
+    });
+    expect(l.backgroundColor.toLowerCase()).not.toBe('#1b1f2a');
+  });
+
   for (const name of ['centered', 'neon', 'minimal', 'hero'] as const) {
     it(`${name} returns a valid layout with positioned avatar and username`, () => {
       const l = PRESETS[name]({
@@ -130,5 +140,28 @@ describe('layout (centered preset)', () => {
 
   it('throws nothing and keeps subtitle text', () => {
     expect(result.subtitle?.text).toBe('Welcome!');
+  });
+});
+
+describe('subtitle font size', () => {
+  it('uses custom subtitleSize when provided', () => {
+    const l = layout({
+      ...DEFAULT_OPTIONS,
+      username: 'Quit',
+      subtitle: 'Welcome!',
+      font: { size: 40, subtitleSize: 22 },
+    });
+    expect(l.subtitle?.size).toBe(22);
+  });
+
+  it('defaults subtitle to ~61% of font.size when subtitleSize is not set', () => {
+    const l = layout({
+      ...DEFAULT_OPTIONS,
+      username: 'Quit',
+      subtitle: 'Welcome!',
+      font: { size: 40 },
+    });
+    // Math.round(40 * 0.61) = 24
+    expect(l.subtitle?.size).toBe(24);
   });
 });

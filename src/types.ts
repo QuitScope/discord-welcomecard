@@ -18,6 +18,7 @@ export interface FontOptions {
   family?: string;
   color?: string;
   size?: number;
+  subtitleSize?: number;
 }
 
 export interface CardOptions {
