@@ -143,6 +143,32 @@ describe('layout (centered preset)', () => {
   });
 });
 
+describe('ringColor and usernameColor', () => {
+  it('uses custom ringColor when provided', () => {
+    const l = layout({ ...DEFAULT_OPTIONS, username: 'Quit', ringColor: '#ff0000' });
+    expect(l.avatar.ringColor).toBe('#ff0000');
+  });
+
+  it('falls back to theme accent when ringColor is not set', () => {
+    const l = layout({ ...DEFAULT_OPTIONS, username: 'Quit' });
+    expect(l.avatar.ringColor).toMatch(/^#/);
+  });
+
+  it('uses usernameColor for username text when provided', () => {
+    const l = layout({
+      ...DEFAULT_OPTIONS,
+      username: 'Quit',
+      font: { usernameColor: '#ff6600' },
+    });
+    expect(l.username.color).toBe('#ff6600');
+  });
+
+  it('falls back to font.color for username when usernameColor is not set', () => {
+    const l = layout({ ...DEFAULT_OPTIONS, username: 'Quit', font: { color: '#aabbcc' } });
+    expect(l.username.color).toBe('#aabbcc');
+  });
+});
+
 describe('subtitle font size', () => {
   it('uses custom subtitleSize when provided', () => {
     const l = layout({

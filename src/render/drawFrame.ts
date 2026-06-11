@@ -1,23 +1,36 @@
 import type { SKRSContext2D } from '@napi-rs/canvas';
 import type { LayoutResult, TextBox } from '../presets/index.js';
 import { loadImageOrFallback } from '../assets/loadImage.js';
+import { rotateHue } from '../assets/colorUtils.js';
 
 export interface FrameState {
-  textAlpha: number; // 0..1 reveal for text
-  avatarGlow: number; // 0..1 glow intensity
+  textAlpha: number;       // 0..1 reveal for text
+  avatarGlow: number;      // 0..1 glow intensity
   backgroundShift: number; // 0..1 gradient phase
+  ringShift: number;       // 0..1 hue rotation of ring color
+  textSlide: number;       // 0=below card, 1=in position
+  avatarBounce: number;    // -1..1 vertical oscillation
 }
 
-export const STATIC_FRAME: FrameState = { textAlpha: 1, avatarGlow: 1, backgroundShift: 0 };
+export const STATIC_FRAME: FrameState = {
+  textAlpha: 1,
+  avatarGlow: 1,
+  backgroundShift: 0,
+  ringShift: 0,
+  textSlide: 1,
+  avatarBounce: 0,
+};
 
-function drawText(ctx: SKRSContext2D, box: TextBox, alpha: number) {
+const BOUNCE_AMPLITUDE = 10; // max pixels avatar moves up/down
+
+function drawText(ctx: SKRSContext2D, box: TextBox, alpha: number, slideOffset: number) {
   ctx.save();
   ctx.globalAlpha = alpha;
   ctx.fillStyle = box.color;
   ctx.textAlign = box.align;
   ctx.textBaseline = 'alphabetic';
   ctx.font = `${box.size}px ${box.family}`;
-  ctx.fillText(box.text, box.x, box.y);
+  ctx.fillText(box.text, box.x, box.y + slideOffset);
   ctx.restore();
 }
 
@@ -46,13 +59,15 @@ export async function drawFrame(
 
   // avatar (circular) with glow ring
   const { x, y, size, ringColor } = l.avatar;
+  const animatedRingColor = state.ringShift > 0 ? rotateHue(ringColor, state.ringShift) : ringColor;
+  const bounceOffset = state.avatarBounce * BOUNCE_AMPLITUDE;
   const cx = x + size / 2;
-  const cy = y + size / 2;
+  const cy = y + size / 2 + bounceOffset;
   ctx.save();
-  ctx.shadowColor = ringColor;
+  ctx.shadowColor = animatedRingColor;
   ctx.shadowBlur = 10 + state.avatarGlow * 25;
   ctx.lineWidth = 6;
-  ctx.strokeStyle = ringColor;
+  ctx.strokeStyle = animatedRingColor;
   ctx.beginPath();
   ctx.arc(cx, cy, size / 2 + 3, 0, Math.PI * 2);
   ctx.stroke();
@@ -63,11 +78,12 @@ export async function drawFrame(
   ctx.beginPath();
   ctx.arc(cx, cy, size / 2, 0, Math.PI * 2);
   ctx.clip();
-  ctx.drawImage(avatarImg, x, y, size, size);
+  ctx.drawImage(avatarImg, x, y + bounceOffset, size, size);
   ctx.restore();
 
-  // text
-  drawText(ctx, l.username, state.textAlpha);
-  if (l.subtitle) drawText(ctx, l.subtitle, state.textAlpha);
-  if (l.memberCount) drawText(ctx, l.memberCount, state.textAlpha);
+  // text — slide offset moves text up from below into position
+  const slideOffset = (1 - state.textSlide) * l.height;
+  drawText(ctx, l.username, state.textAlpha, slideOffset);
+  if (l.subtitle) drawText(ctx, l.subtitle, state.textAlpha, slideOffset);
+  if (l.memberCount) drawText(ctx, l.memberCount, state.textAlpha, slideOffset);
 }

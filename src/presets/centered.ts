@@ -52,7 +52,7 @@ export interface LayoutResult {
   width: number;
   height: number;
   backgroundColor: string;
-  background?: string;
+  background?: string | Buffer;
   avatar: { x: number; y: number; size: number; ringColor: string; source?: string | Buffer };
   username: TextBox;
   subtitle?: TextBox;
@@ -68,6 +68,7 @@ export function centeredLayout(opts: CardOptions): LayoutResult {
     opts.theme === 'dark' ? '#1e1e2e' : '#eff1f5',
   );
   const textColor = opts.font.color ?? (opts.theme === 'dark' ? '#ffffff' : '#11111b');
+  const usernameColor = opts.font.usernameColor ?? textColor;
   const family = opts.font.family ?? DEFAULT_FONT_FAMILY;
 
   const avatarSize = 170;
@@ -82,7 +83,7 @@ export function centeredLayout(opts: CardOptions): LayoutResult {
       x: width / 2 - avatarSize / 2,
       y: avatarY,
       size: avatarSize,
-      ringColor: accent,
+      ringColor: opts.ringColor ?? accent,
       source: opts.avatar,
     },
     username: {
@@ -90,7 +91,7 @@ export function centeredLayout(opts: CardOptions): LayoutResult {
       x: width / 2,
       y: avatarY + avatarSize + 66,
       size: opts.font.size ?? 56,
-      color: textColor,
+      color: usernameColor,
       family,
       align: 'center',
     },

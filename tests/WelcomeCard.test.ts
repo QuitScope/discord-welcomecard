@@ -41,4 +41,29 @@ describe('WelcomeCard builder', () => {
     // @ts-expect-error testing invalid runtime value
     expect(() => new WelcomeCard().setPreset('bogus')).toThrow(WelcomeCardError);
   });
+
+  it('renders a GIF with ring animation', async () => {
+    const buf = await new WelcomeCard()
+      .setUsername('Quit')
+      .setRingColor('#ff0000')
+      .setAnimations(['ring'])
+      .toGIF();
+    expect(buf.subarray(0, 6).equals(GIF_MAGIC)).toBe(true);
+  });
+
+  it('renders a GIF with slide and bounce animations', async () => {
+    const buf = await new WelcomeCard()
+      .setUsername('Quit')
+      .setAnimations(['slide', 'bounce'])
+      .toGIF();
+    expect(buf.subarray(0, 6).equals(GIF_MAGIC)).toBe(true);
+  });
+
+  it('accepts a Buffer as background', async () => {
+    const buf = await new WelcomeCard()
+      .setUsername('Quit')
+      .setBackground(Buffer.alloc(0))
+      .toPNG();
+    expect(buf.subarray(0, 4).equals(PNG_MAGIC)).toBe(true);
+  });
 });
