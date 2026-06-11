@@ -50,8 +50,13 @@ export class WelcomeCard {
     return this;
   }
 
-  setBackground(background: string): this {
+  setBackground(background: string | Buffer): this {
     this.opts.background = background;
+    return this;
+  }
+
+  setRingColor(color: string): this {
+    this.opts.ringColor = color;
     return this;
   }
 
