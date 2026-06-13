@@ -180,14 +180,14 @@ describe('subtitle font size', () => {
     expect(l.subtitle?.size).toBe(22);
   });
 
-  it('defaults subtitle to ~61% of font.size when subtitleSize is not set', () => {
+  it('defaults subtitle to ~125% of font.size when subtitleSize is not set', () => {
     const l = layout({
       ...DEFAULT_OPTIONS,
       username: 'Quit',
       subtitle: 'Welcome!',
       font: { size: 40 },
     });
-    // Math.round(40 * 0.61) = 24
-    expect(l.subtitle?.size).toBe(24);
+    // Math.round(40 * 1.25) = 50
+    expect(l.subtitle?.size).toBe(50);
   });
 });
