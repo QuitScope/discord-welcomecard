@@ -89,8 +89,8 @@ export function centeredLayout(opts: CardOptions): LayoutResult {
     username: {
       text: opts.username ?? '',
       x: width / 2,
-      y: avatarY + avatarSize + 66,
-      size: opts.font.size ?? 56,
+      y: avatarY + avatarSize + 122,
+      size: opts.font.subtitleSize ?? Math.round((opts.font.size ?? 56) * 0.61),
       color: usernameColor,
       family,
       align: 'center',
@@ -99,8 +99,8 @@ export function centeredLayout(opts: CardOptions): LayoutResult {
       ? {
           text: opts.subtitle,
           x: width / 2,
-          y: avatarY + avatarSize + 122,
-          size: opts.font.subtitleSize ?? Math.round((opts.font.size ?? 56) * 0.61),
+          y: avatarY + avatarSize + 66,
+          size: opts.font.size ?? 56,
           color: textColor,
           family,
           align: 'center',
