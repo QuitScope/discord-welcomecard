@@ -14,9 +14,9 @@ export function heroLayout(opts: CardOptions): LayoutResult {
       opts.theme === 'dark' ? '#1b1f2a' : '#e8ecf4',
     ),
     avatar: { ...base.avatar, x: avatarX, y: base.height / 2 - base.avatar.size / 2 },
-    username: { ...base.username, x: textX, y: base.height / 2 - 12, align: 'left' },
+    username: { ...base.username, x: textX, y: base.height / 2 + 42, align: 'left' },
     subtitle: base.subtitle
-      ? { ...base.subtitle, x: textX, y: base.height / 2 + 42, align: 'left' }
+      ? { ...base.subtitle, x: textX, y: base.height / 2 - 12, align: 'left' }
       : undefined,
     memberCount: base.memberCount
       ? // hero is asymmetric — default the count to the corner, not bottom-center
