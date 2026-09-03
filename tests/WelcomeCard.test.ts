@@ -59,6 +59,12 @@ describe('WelcomeCard builder', () => {
     expect(buf.subarray(0, 6).equals(GIF_MAGIC)).toBe(true);
   });
 
+  it('setSanitizeText(false) keeps raw username through to render', async () => {
+    const card = new WelcomeCard().setUsername('𝙈𝙖𝙧𝙡𝙤𝙤𝙬☙').setSanitizeText(false);
+    const buf = await card.toPNG();
+    expect(buf.subarray(0, 4).equals(PNG_MAGIC)).toBe(true);
+  });
+
   it('accepts a Buffer as background', async () => {
     const buf = await new WelcomeCard()
       .setUsername('Quit')

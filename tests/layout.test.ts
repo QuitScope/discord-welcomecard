@@ -143,6 +143,23 @@ describe('layout (centered preset)', () => {
   });
 });
 
+describe('text sanitization', () => {
+  it('folds pseudo-font usernames down to plain letters by default', () => {
+    const l = layout({ ...DEFAULT_OPTIONS, username: '𝙈𝙖𝙧𝙡𝙤𝙤𝙬☙' });
+    expect(l.username.text).toBe('Marloow');
+  });
+
+  it('sanitizes the subtitle too', () => {
+    const l = layout({ ...DEFAULT_OPTIONS, username: 'Quit', subtitle: 'ⓦⓔⓛⓒⓞⓜⓔ 🎉' });
+    expect(l.subtitle?.text).toBe('welcome');
+  });
+
+  it('leaves text untouched when sanitizeText is false', () => {
+    const l = layout({ ...DEFAULT_OPTIONS, username: '𝙈𝙖𝙧𝙡𝙤𝙤𝙬☙', sanitizeText: false });
+    expect(l.username.text).toBe('𝙈𝙖𝙧𝙡𝙤𝙤𝙬☙');
+  });
+});
+
 describe('ringColor and usernameColor', () => {
   it('uses custom ringColor when provided', () => {
     const l = layout({ ...DEFAULT_OPTIONS, username: 'Quit', ringColor: '#ff0000' });

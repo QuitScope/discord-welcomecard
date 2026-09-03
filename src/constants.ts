@@ -12,4 +12,5 @@ export const DEFAULT_OPTIONS: CardOptions = {
   theme: 'dark',
   font: {},
   animations: [],
+  sanitizeText: true,
 };
