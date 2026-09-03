@@ -95,6 +95,7 @@ client.on('guildMemberAdd', async (member) => {
 | `setTheme(theme)` | `'dark'` (default) or `'light'` |
 | `setFont({ family, color, usernameColor, size, subtitleSize })` | Override font settings; `usernameColor` applies only to the username line |
 | `setAnimations(list)` | Any of `'background'`, `'text'`, `'avatar'`, `'ring'`, `'slide'`, `'bounce'` — used by `toGIF()` |
+| `setSanitizeText(bool)` | `true` (default) folds pseudo-font / emoji / ornament characters in the username and subtitle down to glyphs the bundled font can draw; `false` renders the raw string |
 | `toPNG()` | `Promise<Buffer>` — static card |
 | `toGIF()` | `Promise<Buffer>` — animated card |
 
@@ -102,6 +103,14 @@ The `toAttachment(buffer, name?)` helper lives in `@quitscope/discord-welcomecar
 `discord.js` (optional peer dependency). The core package works without it.
 
 Only `setUsername()` is required — everything else has sensible defaults or fallbacks.
+
+### Username sanitization
+
+Discord names full of pseudo-font characters (`𝙈𝙖𝙧𝙡𝙤𝙤𝙬☙`, `ⓜⓐⓡ`, fullwidth text) have no
+glyphs in the bundled Poppins font and would otherwise render as tofu boxes. By default the
+username and subtitle are run through Unicode NFKC/NFC normalization (`𝙈𝙖𝙧𝙡𝙤𝙤𝙬` → `Marloow`),
+then emoji, ornaments and zalgo mark-stacks are stripped. Real scripts (Cyrillic, CJK, accented
+Latin like `Nguyễn`) pass through untouched. Call `setSanitizeText(false)` to opt out.
 
 ## Requirements
 

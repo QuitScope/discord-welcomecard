@@ -75,6 +75,11 @@ export class WelcomeCard {
     return this;
   }
 
+  setSanitizeText(enabled: boolean): this {
+    this.opts.sanitizeText = enabled;
+    return this;
+  }
+
   private validate(): void {
     if (!this.opts.username) {
       throw new WelcomeCardError('username is required — call .setUsername() before rendering.');

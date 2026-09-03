@@ -29,6 +29,12 @@ export interface CardOptions {
   subtitle?: string;
   memberCount?: number;
   memberCountPosition?: MemberCountPosition;
+  /**
+   * Fold pseudo-font / emoji / ornament characters in username and subtitle down
+   * to glyphs the card font can render. Defaults to true; set false to draw the
+   * raw string as given.
+   */
+  sanitizeText?: boolean;
   background?: string | Buffer;
   ringColor?: string;
   theme: Theme;
