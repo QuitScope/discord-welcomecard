@@ -90,7 +90,7 @@ client.on('guildMemberAdd', async (member) => {
 | `setSubtitle(text)` | Secondary line, e.g. "Welcome to the server!" |
 | `setMemberCount(n)` | Renders "MEMBER #n" — optional, omit to hide |
 | `setMemberCountPosition(pos)` | 3×3 grid: `'top-left'`, `'top-center'`, `'top-right'`, `'center-left'`, `'center'`, `'center-right'`, `'bottom-left'`, `'bottom-center'`, `'bottom-right'`. `'corner'` is an alias for `'bottom-right'`. Defaults: `'bottom-center'` in the centered presets, `'bottom-right'` in `hero`. |
-| `setBackground(value)` | Hex color (`#1e1e2e`), image URL, or `Buffer` |
+| `setBackground(value)` | Hex color (`#1e1e2e`), static image URL, or `Buffer` (GIF files are not animated) |
 | `setRingColor(hex)` | Override the avatar ring / glow color |
 | `setTheme(theme)` | `'dark'` (default) or `'light'` |
 | `setFont({ family, color, usernameColor, size, subtitleSize })` | Override font settings; `usernameColor` applies only to the username line |
